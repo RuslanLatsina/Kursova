@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Kursova.orders>
+
+@{
+    ViewBag.Title = "Orders";
+    var grid = new WebGrid(source: Model, canPage: true, rowsPerPage: 10);
+    grid.Pager(WebGridPagerModes.All);
+}
+
+<h2>Orders</h2>
+
+<table>
+    <tr>
+        <th>номер</th>
+        <th>клієнт</th>
+        <th>фірма машини</th>
+        <th>модель</th>
+        <th>Співробітник</th>
+        <th>Коментар</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.order_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.clients.FIO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cars.firm_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cars.car_model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.employee.FIO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.comm)
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.order_id }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.order_id })
+            </td>
+        </tr>
+    }
+</table>
+@*<div id="content">
+    @grid.GetHtml()
+    //columns: grid.Columns(
+    //        grid.Column()
+    //    ))
+
+</div>*@

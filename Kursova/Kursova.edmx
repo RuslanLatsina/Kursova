@@ -1,0 +1,523 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="STOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cars">
+          <Key>
+            <PropertyRef Name="cars_id" />
+          </Key>
+          <Property Name="cars_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firm_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="car_model" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="engine_power" Type="decimal" Precision="10" Scale="4" Nullable="false" />
+          <Property Name="flow_consumption" Type="decimal" Precision="10" Scale="4" Nullable="false" />
+          <Property Name="gasoline_consumption" Type="decimal" Precision="10" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="checks">
+          <Key>
+            <PropertyRef Name="check_id" />
+          </Key>
+          <Property Name="check_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="details_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="clients">
+          <Key>
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="client_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FIO" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="br_date" Type="date" />
+          <Property Name="first_exp_day" Type="date" />
+        </EntityType>
+        <EntityType Name="details">
+          <Key>
+            <PropertyRef Name="details_id" />
+          </Key>
+          <Property Name="details_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="10" Scale="4" Nullable="false" />
+          <Property Name="amount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="employee_id" />
+          </Key>
+          <Property Name="employee_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FIO" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="br_date" Type="date" Nullable="false" />
+          <Property Name="work_in" Type="date" Nullable="false" />
+          <Property Name="work_to" Type="date" />
+          <Property Name="position" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="salary" Type="decimal" Precision="10" Scale="4" />
+        </EntityType>
+        <EntityType Name="guarantee">
+          <Key>
+            <PropertyRef Name="guar_id" />
+          </Key>
+          <Property Name="guar_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="date_from" Type="date" />
+          <Property Name="date_to" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="client_id" Type="int" Nullable="false" />
+          <Property Name="car_id" Type="int" Nullable="false" />
+          <Property Name="employee_id" Type="int" Nullable="false" />
+          <Property Name="comm" Type="varchar" MaxLength="250" />
+          <Property Name="date_start" Type="date" Nullable="false" />
+          <Property Name="date_end" Type="date" Nullable="false" />
+          <Property Name="summ" Type="decimal" Precision="10" Scale="4" Nullable="false" />
+          <Property Name="guarantee" Type="char" MaxLength="1" />
+          <Property Name="gos_number" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK__checks__details___20C1E124">
+          <End Role="details" Type="Self.details" Multiplicity="1" />
+          <End Role="checks" Type="Self.checks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="details">
+              <PropertyRef Name="details_id" />
+            </Principal>
+            <Dependent Role="checks">
+              <PropertyRef Name="details_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__checks__order_id__1FCDBCEB">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="checks" Type="Self.checks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="checks">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__guarantee__order__239E4DCF">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="guarantee" Type="Self.guarantee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="guarantee">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orders__car_id__1920BF5C">
+          <End Role="cars" Type="Self.cars" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cars">
+              <PropertyRef Name="cars_id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="car_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orders__client_i__182C9B23">
+          <End Role="clients" Type="Self.clients" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clients">
+              <PropertyRef Name="client_id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orders__employee__1A14E395">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="STOModelStoreContainer">
+          <EntitySet Name="cars" EntityType="Self.cars" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="checks" EntityType="Self.checks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="clients" EntityType="Self.clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="details" EntityType="Self.details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="guarantee" EntityType="Self.guarantee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__checks__details___20C1E124" Association="Self.FK__checks__details___20C1E124">
+            <End Role="details" EntitySet="details" />
+            <End Role="checks" EntitySet="checks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__checks__order_id__1FCDBCEB" Association="Self.FK__checks__order_id__1FCDBCEB">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="checks" EntitySet="checks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__guarantee__order__239E4DCF" Association="Self.FK__guarantee__order__239E4DCF">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="guarantee" EntitySet="guarantee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orders__car_id__1920BF5C" Association="Self.FK__orders__car_id__1920BF5C">
+            <End Role="cars" EntitySet="cars" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orders__client_i__182C9B23" Association="Self.FK__orders__client_i__182C9B23">
+            <End Role="clients" EntitySet="clients" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orders__employee__1A14E395" Association="Self.FK__orders__employee__1A14E395">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="STOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="cars">
+          <Key>
+            <PropertyRef Name="cars_id" />
+          </Key>
+          <Property Name="cars_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firm_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="car_model" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="engine_power" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
+          <Property Name="flow_consumption" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
+          <Property Name="gasoline_consumption" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
+          <NavigationProperty Name="orders" Relationship="Self.FK__orders__car_id__1920BF5C" FromRole="cars" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="checks">
+          <Key>
+            <PropertyRef Name="check_id" />
+          </Key>
+          <Property Name="check_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="order_id" Type="Int32" Nullable="false" />
+          <Property Name="details_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="details" Relationship="Self.FK__checks__details___20C1E124" FromRole="checks" ToRole="details" />
+          <NavigationProperty Name="orders" Relationship="Self.FK__checks__order_id__1FCDBCEB" FromRole="checks" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="clients">
+          <Key>
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="client_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="br_date" Type="DateTime" Precision="0" />
+          <Property Name="first_exp_day" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="orders" Relationship="Self.FK__orders__client_i__182C9B23" FromRole="clients" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="details">
+          <Key>
+            <PropertyRef Name="details_id" />
+          </Key>
+          <Property Name="details_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
+          <Property Name="amount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="checks" Relationship="Self.FK__checks__details___20C1E124" FromRole="details" ToRole="checks" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="employee_id" />
+          </Key>
+          <Property Name="employee_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="br_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="work_in" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="work_to" Type="DateTime" Precision="0" />
+          <Property Name="position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="salary" Type="Decimal" Precision="10" Scale="4" />
+          <NavigationProperty Name="orders" Relationship="Self.FK__orders__employee__1A14E395" FromRole="employee" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="guarantee">
+          <Key>
+            <PropertyRef Name="guar_id" />
+          </Key>
+          <Property Name="guar_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="order_id" Type="Int32" Nullable="false" />
+          <Property Name="date_from" Type="DateTime" Precision="0" />
+          <Property Name="date_to" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="orders" Relationship="Self.FK__guarantee__order__239E4DCF" FromRole="guarantee" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="client_id" Type="Int32" Nullable="false" />
+          <Property Name="car_id" Type="Int32" Nullable="false" />
+          <Property Name="employee_id" Type="Int32" Nullable="false" />
+          <Property Name="comm" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="date_start" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="date_end" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="summ" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
+          <Property Name="guarantee" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="gos_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cars" Relationship="Self.FK__orders__car_id__1920BF5C" FromRole="orders" ToRole="cars" />
+          <NavigationProperty Name="checks" Relationship="Self.FK__checks__order_id__1FCDBCEB" FromRole="orders" ToRole="checks" />
+          <NavigationProperty Name="clients" Relationship="Self.FK__orders__client_i__182C9B23" FromRole="orders" ToRole="clients" />
+          <NavigationProperty Name="employee" Relationship="Self.FK__orders__employee__1A14E395" FromRole="orders" ToRole="employee" />
+          <NavigationProperty Name="guarantee1" Relationship="Self.FK__guarantee__order__239E4DCF" FromRole="orders" ToRole="guarantee" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK__orders__car_id__1920BF5C">
+          <End Role="cars" Type="Self.cars" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cars">
+              <PropertyRef Name="cars_id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="car_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__checks__details___20C1E124">
+          <End Role="details" Type="Self.details" Multiplicity="1" />
+          <End Role="checks" Type="Self.checks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="details">
+              <PropertyRef Name="details_id" />
+            </Principal>
+            <Dependent Role="checks">
+              <PropertyRef Name="details_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__checks__order_id__1FCDBCEB">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="checks" Type="Self.checks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="checks">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orders__client_i__182C9B23">
+          <End Role="clients" Type="Self.clients" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clients">
+              <PropertyRef Name="client_id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orders__employee__1A14E395">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__guarantee__order__239E4DCF">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="guarantee" Type="Self.guarantee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="guarantee">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="STOEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cars" EntityType="Self.cars" />
+          <EntitySet Name="checks" EntityType="Self.checks" />
+          <EntitySet Name="clients" EntityType="Self.clients" />
+          <EntitySet Name="details" EntityType="Self.details" />
+          <EntitySet Name="employee" EntityType="Self.employee" />
+          <EntitySet Name="guarantee" EntityType="Self.guarantee" />
+          <EntitySet Name="orders" EntityType="Self.orders" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK__orders__car_id__1920BF5C" Association="Self.FK__orders__car_id__1920BF5C">
+            <End Role="cars" EntitySet="cars" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__checks__details___20C1E124" Association="Self.FK__checks__details___20C1E124">
+            <End Role="details" EntitySet="details" />
+            <End Role="checks" EntitySet="checks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__checks__order_id__1FCDBCEB" Association="Self.FK__checks__order_id__1FCDBCEB">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="checks" EntitySet="checks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orders__client_i__182C9B23" Association="Self.FK__orders__client_i__182C9B23">
+            <End Role="clients" EntitySet="clients" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orders__employee__1A14E395" Association="Self.FK__orders__employee__1A14E395">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__guarantee__order__239E4DCF" Association="Self.FK__guarantee__order__239E4DCF">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="guarantee" EntitySet="guarantee" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="STOModelStoreContainer" CdmEntityContainer="STOEntities">
+          <EntitySetMapping Name="cars">
+            <EntityTypeMapping TypeName="STOModel.cars">
+              <MappingFragment StoreEntitySet="cars">
+                <ScalarProperty Name="cars_id" ColumnName="cars_id" />
+                <ScalarProperty Name="firm_name" ColumnName="firm_name" />
+                <ScalarProperty Name="car_model" ColumnName="car_model" />
+                <ScalarProperty Name="engine_power" ColumnName="engine_power" />
+                <ScalarProperty Name="flow_consumption" ColumnName="flow_consumption" />
+                <ScalarProperty Name="gasoline_consumption" ColumnName="gasoline_consumption" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="checks">
+            <EntityTypeMapping TypeName="STOModel.checks">
+              <MappingFragment StoreEntitySet="checks">
+                <ScalarProperty Name="check_id" ColumnName="check_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="details_id" ColumnName="details_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="clients">
+            <EntityTypeMapping TypeName="STOModel.clients">
+              <MappingFragment StoreEntitySet="clients">
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="br_date" ColumnName="br_date" />
+                <ScalarProperty Name="first_exp_day" ColumnName="first_exp_day" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="details">
+            <EntityTypeMapping TypeName="STOModel.details">
+              <MappingFragment StoreEntitySet="details">
+                <ScalarProperty Name="details_id" ColumnName="details_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employee">
+            <EntityTypeMapping TypeName="STOModel.employee">
+              <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="br_date" ColumnName="br_date" />
+                <ScalarProperty Name="work_in" ColumnName="work_in" />
+                <ScalarProperty Name="work_to" ColumnName="work_to" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="guarantee">
+            <EntityTypeMapping TypeName="STOModel.guarantee">
+              <MappingFragment StoreEntitySet="guarantee">
+                <ScalarProperty Name="guar_id" ColumnName="guar_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="date_from" ColumnName="date_from" />
+                <ScalarProperty Name="date_to" ColumnName="date_to" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orders">
+            <EntityTypeMapping TypeName="STOModel.orders">
+              <MappingFragment StoreEntitySet="orders">
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="car_id" ColumnName="car_id" />
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="comm" ColumnName="comm" />
+                <ScalarProperty Name="date_start" ColumnName="date_start" />
+                <ScalarProperty Name="date_end" ColumnName="date_end" />
+                <ScalarProperty Name="summ" ColumnName="summ" />
+                <ScalarProperty Name="guarantee" ColumnName="guarantee" />
+                <ScalarProperty Name="gos_number" ColumnName="gos_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="STOModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

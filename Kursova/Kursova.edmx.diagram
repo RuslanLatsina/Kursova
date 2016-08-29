@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a872b280341341b69cdda6a0ce69d2e9" Name="Diagram1">
+        <EntityTypeShape EntityType="STOModel.cars" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="STOModel.checks" Width="1.5" PointX="5.25" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="STOModel.clients" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STOModel.details" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="STOModel.employee" Width="1.5" PointX="0.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="STOModel.guarantee" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="STOModel.orders" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="STOModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="STOModel.FK__orders__car_id__1920BF5C" ManuallyRouted="false" />
+        <AssociationConnector Association="STOModel.FK__checks__details___20C1E124" ManuallyRouted="false" />
+        <AssociationConnector Association="STOModel.FK__checks__order_id__1FCDBCEB" ManuallyRouted="false" />
+        <AssociationConnector Association="STOModel.FK__orders__client_i__182C9B23" ManuallyRouted="false" />
+        <AssociationConnector Association="STOModel.FK__orders__employee__1A14E395" ManuallyRouted="false" />
+        <AssociationConnector Association="STOModel.FK__guarantee__order__239E4DCF" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

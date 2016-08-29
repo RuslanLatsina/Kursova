@@ -1,0 +1,98 @@
+﻿@model Kursova.orders
+
+@{
+    ViewBag.Title = "OrdersDetails";
+}
+
+<h2>OrdersDetails</h2>
+
+<div>
+    <h4>orders</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.order_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.order_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.client_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.client_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.car_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.car_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.employee_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.employee_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comm)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_start)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_start)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_end)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_end)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.summ)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.summ)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.guarantee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.guarantee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.gos_number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.gos_number)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
